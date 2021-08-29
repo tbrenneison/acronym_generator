@@ -30,13 +30,13 @@ namespace Acronym_Generator
 
                         foreach (var wordSegment in hyphenatedWords)
                         {
-                            buildAcronym(wordSegment, str); 
+                            addtoAcronym(wordSegment, str); 
                         }
 
                     }
                     else
                     {
-                        buildAcronym(word, str);
+                        addtoAcronym(word, str);
                     }
 
             }
@@ -45,35 +45,19 @@ namespace Acronym_Generator
 
         }
 
-        public static void buildAcronym(string word, StringBuilder str)
+        public static void addtoAcronym(string word, StringBuilder str)
         {
-            if (isNotEmptyString(word))
+            if (word.Length > 0) //ignore ""
             {
                 var c = word[0];
-                if (isValidCharacter(c))
+
+                if ((c >= 'A' && c <= 'Z')) //we only want the alphabet
                 {
                     str.Append(c);
                 }
             }
         }
 
-        public static bool isNotEmptyString(string word)
-        {
-            if (word.Length > 0) //ignore ""
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static bool isValidCharacter(char c)
-        {
-            if ((c >= 'A' && c <= 'Z')) //we only want the alphabet
-            {
-                return true;
-            }
-            return false;
-        }
 
     }
 }
