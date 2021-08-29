@@ -18,42 +18,62 @@ namespace Acronym_Generator
         public static string generateAcronym (string input)
         {
 
-            string[] words = input.ToUpper().Split(' ');
+            string[] words = input.ToUpper().Split(' '); //acronyms are caps anyway so let's do it now
             StringBuilder str = new StringBuilder();
 
             foreach (var word in words)
             {
                 
-                    if (word.Contains("-")) //hyphenated words are exceptional
+                    if (word.Contains("-")) //hyphenated words are exceptional so check for the hyphen first
                     {
                         string[] hyphenatedWords = word.Split("-");
 
                         foreach (var wordSegment in hyphenatedWords)
                         {
-                            if (wordSegment.Length > 0) //ignore "" 
-                            {
-                                var c = wordSegment[0];
-                                if ((c >= 'A' && c <= 'Z')) //we only want the alphabet
-                                {
-                                    str.Append(c);
-                                }
-                            }
+                            buildAcronym(wordSegment, str); 
                         }
+
                     }
                     else
                     {
-                        if (word.Length > 0) 
-                        {
-                            var c = word[0];
-                            if ((c >= 'A' && c <= 'Z')) 
-                            {
-                            str.Append(c);
-                            }
-                        }
-                }
+                        buildAcronym(word, str);
+                    }
+
             }
 
-            return str.ToString(); 
+            return str.ToString();
+
         }
+
+        public static void buildAcronym(string word, StringBuilder str)
+        {
+            if (isNotEmptyString(word))
+            {
+                var c = word[0];
+                if (isValidCharacter(c))
+                {
+                    str.Append(c);
+                }
+            }
+        }
+
+        public static bool isNotEmptyString(string word)
+        {
+            if (word.Length > 0) //ignore ""
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool isValidCharacter(char c)
+        {
+            if ((c >= 'A' && c <= 'Z')) //we only want the alphabet
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }
