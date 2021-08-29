@@ -13,13 +13,16 @@ namespace Acronym_Generator
             Console.WriteLine(generateAcronym("GNU Image Manipulation Program"));
             Console.WriteLine(generateAcronym("Complementary metal-oxide semiconductor"));
             Console.WriteLine(generateAcronym("Something - I made up from thin air"));
+
+            //DESIRED OUTPUT: PNG, FIFO, AJAX, GIMP, CMOS, SIMUFTA
+
         }
 
         public static string generateAcronym (string input)
         {
 
-            string[] words = input.ToUpper().Split(' '); //acronyms are caps anyway so let's do it now
-            StringBuilder str = new StringBuilder();
+            string[] words = input.ToUpper().Split(' '); //acronyms are caps anyway so let's do that now
+            StringBuilder acronym = new StringBuilder();
 
             foreach (var word in words)
             {
@@ -30,26 +33,26 @@ namespace Acronym_Generator
 
                         foreach (var wordSegment in hyphenatedWords)
                         {
-                            addtoAcronym(wordSegment, str); 
+                            addFirstCharToAcronym(wordSegment, acronym); 
                         }
 
                     }
                     else
                     {
-                        addtoAcronym(word, str);
+                        addFirstCharToAcronym(word, acronym);
                     }
 
             }
 
-            return str.ToString();
+            return acronym.ToString();
 
         }
 
-        public static void addtoAcronym(string word, StringBuilder str)
+        public static void addFirstCharToAcronym(string word, StringBuilder str) //return is void because we're passing in ref to the StringBuilder
         {
             if (word.Length > 0) //ignore ""
             {
-                var c = word[0];
+                var c = word[0]; 
 
                 if ((c >= 'A' && c <= 'Z')) //we only want the alphabet
                 {
